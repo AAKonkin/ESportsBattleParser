@@ -1,18 +1,17 @@
-from dbConnection import connect_to_db
-from data_parser import get_all_data, asyncio
+from db_connection import connect_to_db
 from config import DURATION_TIME
+from data_parser import get_all_data
+import time
+import asyncio
 
-
-async def set_sleep():
-    asyncio.sleep(DURATION_TIME)
-
-
-async def main():
+def main():
     CONNECTION = connect_to_db()
-    while True:
-        print("Start parsing...")
-        asyncio.run(get_all_data(CONNECTION))
-        print("Waiting for 60 seconds...")
-        await set_sleep()
+    if (CONNECTION):
+        print('Start parsing...')
+        while(True):
+            asyncio.run(get_all_data(CONNECTION))
+            print('Waiting for 60 seconds')
+            time.sleep(DURATION_TIME)
 
-asyncio.run(main())
+if __name__ == '__main__':
+    main()
